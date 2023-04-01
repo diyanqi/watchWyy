@@ -7,11 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		901AB16F298DF1C200120330 /* Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 901AB16E298DF1C200120330 /* Data.json */; };
+		9044D16F2945899000B2EFD9 /* PlaylistDiscover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9044D16E2945899000B2EFD9 /* PlaylistDiscover.swift */; };
+		9044D17129458CF500B2EFD9 /* SongDiscover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9044D17029458CF500B2EFD9 /* SongDiscover.swift */; };
+		9055012D2931A66E00BE507F /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9055012C2931A66E00BE507F /* LoginPage.swift */; };
+		9055012F2931AB9F00BE507F /* SheetDetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9055012E2931AB9F00BE507F /* SheetDetailPage.swift */; };
+		905501312931B2ED00BE507F /* UserDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905501302931B2ED00BE507F /* UserDisplay.swift */; };
+		905CB025292BA4B100996E7E /* SearchResultDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905CB024292BA4B100996E7E /* SearchResultDisplay.swift */; };
+		9083C6B5298F42920010B4B3 /* SongDetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9083C6B4298F42920010B4B3 /* SongDetailPage.swift */; };
+		9083C6B9298F5C4C0010B4B3 /* LocalMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9083C6B8298F5C4C0010B4B3 /* LocalMusic.swift */; };
+		90A3866C2929B3DB00A84FA9 /* PlayAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A3866B2929B3DB00A84FA9 /* PlayAudio.swift */; };
+		90A9786E292B8AF600F9BBB1 /* SearchPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9786D292B8AF600F9BBB1 /* SearchPage.swift */; };
+		90AC5E6829288BA900A43F18 /* SheetDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AC5E6729288BA900A43F18 /* SheetDetail.swift */; };
+		90AC5E6A2928ABD700A43F18 /* PlayerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AC5E692928ABD700A43F18 /* PlayerPage.swift */; };
+		90C02A0C2951750900A91B61 /* SettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C02A0B2951750900A91B61 /* SettingPage.swift */; };
+		90C02A102951D0AE00A91B61 /* QrcodeLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C02A0F2951D0AE00A91B61 /* QrcodeLogin.swift */; };
+		90C417BE2944B04400225C18 /* CommentShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C417BD2944B04400225C18 /* CommentShow.swift */; };
+		90CDCBFD29457D5E00730395 /* TopPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CDCBFC29457D5E00730395 /* TopPlaylist.swift */; };
+		90CDCBFF2945827D00730395 /* HighQualityPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CDCBFE2945827D00730395 /* HighQualityPlaylist.swift */; };
 		90CF2B302927A2F100016C66 /* wwyy Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 90CF2B2F2927A2F100016C66 /* wwyy Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		90CF2B352927A2F200016C66 /* wwyyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CF2B342927A2F200016C66 /* wwyyApp.swift */; };
 		90CF2B372927A2F200016C66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CF2B362927A2F200016C66 /* ContentView.swift */; };
 		90CF2B392927A2F400016C66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90CF2B382927A2F400016C66 /* Assets.xcassets */; };
 		90CF2B3C2927A2F400016C66 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90CF2B3B2927A2F400016C66 /* Preview Assets.xcassets */; };
+		90CF2B472927B96300016C66 /* RecommendedSongs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CF2B462927B96300016C66 /* RecommendedSongs.swift */; };
+		90DD555C294DBDAC002C3F02 /* Searches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DD555B294DBDAC002C3F02 /* Searches.swift */; };
+		90DD555E294DBE75002C3F02 /* SearchPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DD555D294DBE75002C3F02 /* SearchPlaylist.swift */; };
+		90FAC4A0294408F600ACCED2 /* PlayListShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FAC49F294408F600ACCED2 /* PlayListShow.swift */; };
+		90FAC4A229443E6300ACCED2 /* LyricsShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FAC4A129443E6300ACCED2 /* LyricsShow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,12 +62,36 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		901AB16E298DF1C200120330 /* Data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Data.json; sourceTree = SOURCE_ROOT; };
+		9044D16E2945899000B2EFD9 /* PlaylistDiscover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDiscover.swift; sourceTree = "<group>"; };
+		9044D17029458CF500B2EFD9 /* SongDiscover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDiscover.swift; sourceTree = "<group>"; };
+		9055012C2931A66E00BE507F /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
+		9055012E2931AB9F00BE507F /* SheetDetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetDetailPage.swift; sourceTree = "<group>"; };
+		905501302931B2ED00BE507F /* UserDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDisplay.swift; sourceTree = "<group>"; };
+		905CB024292BA4B100996E7E /* SearchResultDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultDisplay.swift; sourceTree = "<group>"; };
+		9083C6B4298F42920010B4B3 /* SongDetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailPage.swift; sourceTree = "<group>"; };
+		9083C6B8298F5C4C0010B4B3 /* LocalMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMusic.swift; sourceTree = "<group>"; };
+		90A3866B2929B3DB00A84FA9 /* PlayAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayAudio.swift; sourceTree = "<group>"; };
+		90A9786A292A2C5D00F9BBB1 /* wwyy-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "wwyy-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
+		90A9786D292B8AF600F9BBB1 /* SearchPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPage.swift; sourceTree = "<group>"; };
+		90AC5E6729288BA900A43F18 /* SheetDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetDetail.swift; sourceTree = "<group>"; };
+		90AC5E692928ABD700A43F18 /* PlayerPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPage.swift; sourceTree = "<group>"; };
+		90C02A0B2951750900A91B61 /* SettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPage.swift; sourceTree = "<group>"; };
+		90C02A0F2951D0AE00A91B61 /* QrcodeLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrcodeLogin.swift; sourceTree = "<group>"; };
+		90C417BD2944B04400225C18 /* CommentShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentShow.swift; sourceTree = "<group>"; };
+		90CDCBFC29457D5E00730395 /* TopPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPlaylist.swift; sourceTree = "<group>"; };
+		90CDCBFE2945827D00730395 /* HighQualityPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighQualityPlaylist.swift; sourceTree = "<group>"; };
 		90CF2B292927A2F100016C66 /* wwyy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wwyy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90CF2B2F2927A2F100016C66 /* wwyy Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wwyy Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90CF2B342927A2F200016C66 /* wwyyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wwyyApp.swift; sourceTree = "<group>"; };
 		90CF2B362927A2F200016C66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		90CF2B382927A2F400016C66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		90CF2B3B2927A2F400016C66 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		90CF2B462927B96300016C66 /* RecommendedSongs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedSongs.swift; sourceTree = "<group>"; };
+		90DD555B294DBDAC002C3F02 /* Searches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searches.swift; sourceTree = "<group>"; };
+		90DD555D294DBE75002C3F02 /* SearchPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaylist.swift; sourceTree = "<group>"; };
+		90FAC49F294408F600ACCED2 /* PlayListShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListShow.swift; sourceTree = "<group>"; };
+		90FAC4A129443E6300ACCED2 /* LyricsShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsShow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,10 +125,34 @@
 		90CF2B332927A2F100016C66 /* wwyy Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				90CF2B342927A2F200016C66 /* wwyyApp.swift */,
-				90CF2B362927A2F200016C66 /* ContentView.swift */,
+				901AB16E298DF1C200120330 /* Data.json */,
 				90CF2B382927A2F400016C66 /* Assets.xcassets */,
+				90C417BD2944B04400225C18 /* CommentShow.swift */,
+				90CF2B362927A2F200016C66 /* ContentView.swift */,
+				9083C6B8298F5C4C0010B4B3 /* LocalMusic.swift */,
+				90C02A0B2951750900A91B61 /* SettingPage.swift */,
+				90CDCBFE2945827D00730395 /* HighQualityPlaylist.swift */,
+				9055012C2931A66E00BE507F /* LoginPage.swift */,
+				90C02A0F2951D0AE00A91B61 /* QrcodeLogin.swift */,
+				90FAC4A129443E6300ACCED2 /* LyricsShow.swift */,
+				90A3866B2929B3DB00A84FA9 /* PlayAudio.swift */,
+				9083C6B4298F42920010B4B3 /* SongDetailPage.swift */,
+				90AC5E692928ABD700A43F18 /* PlayerPage.swift */,
+				9044D16E2945899000B2EFD9 /* PlaylistDiscover.swift */,
+				90FAC49F294408F600ACCED2 /* PlayListShow.swift */,
 				90CF2B3A2927A2F400016C66 /* Preview Content */,
+				90CF2B462927B96300016C66 /* RecommendedSongs.swift */,
+				90A9786D292B8AF600F9BBB1 /* SearchPage.swift */,
+				905CB024292BA4B100996E7E /* SearchResultDisplay.swift */,
+				90DD555B294DBDAC002C3F02 /* Searches.swift */,
+				90DD555D294DBE75002C3F02 /* SearchPlaylist.swift */,
+				90AC5E6729288BA900A43F18 /* SheetDetail.swift */,
+				9055012E2931AB9F00BE507F /* SheetDetailPage.swift */,
+				9044D17029458CF500B2EFD9 /* SongDiscover.swift */,
+				90CDCBFC29457D5E00730395 /* TopPlaylist.swift */,
+				905501302931B2ED00BE507F /* UserDisplay.swift */,
+				90A9786A292A2C5D00F9BBB1 /* wwyy-Watch-App-Info.plist */,
+				90CF2B342927A2F200016C66 /* wwyyApp.swift */,
 			);
 			path = "wwyy Watch App";
 			sourceTree = "<group>";
@@ -127,6 +198,8 @@
 			dependencies = (
 			);
 			name = "wwyy Watch App";
+			packageProductDependencies = (
+			);
 			productName = "wwyy Watch App";
 			productReference = 90CF2B2F2927A2F100016C66 /* wwyy Watch App.app */;
 			productType = "com.apple.product-type.application";
@@ -158,6 +231,8 @@
 				Base,
 			);
 			mainGroup = 90CF2B222927A2F100016C66;
+			packageReferences = (
+			);
 			productRefGroup = 90CF2B2A2927A2F100016C66 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -182,6 +257,7 @@
 			files = (
 				90CF2B3C2927A2F400016C66 /* Preview Assets.xcassets in Resources */,
 				90CF2B392927A2F400016C66 /* Assets.xcassets in Resources */,
+				901AB16F298DF1C200120330 /* Data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,8 +268,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9083C6B5298F42920010B4B3 /* SongDetailPage.swift in Sources */,
+				90AC5E6829288BA900A43F18 /* SheetDetail.swift in Sources */,
+				90CDCBFD29457D5E00730395 /* TopPlaylist.swift in Sources */,
 				90CF2B372927A2F200016C66 /* ContentView.swift in Sources */,
+				90DD555C294DBDAC002C3F02 /* Searches.swift in Sources */,
+				9044D17129458CF500B2EFD9 /* SongDiscover.swift in Sources */,
+				90FAC4A229443E6300ACCED2 /* LyricsShow.swift in Sources */,
+				90A3866C2929B3DB00A84FA9 /* PlayAudio.swift in Sources */,
 				90CF2B352927A2F200016C66 /* wwyyApp.swift in Sources */,
+				90C02A0C2951750900A91B61 /* SettingPage.swift in Sources */,
+				90A9786E292B8AF600F9BBB1 /* SearchPage.swift in Sources */,
+				90C417BE2944B04400225C18 /* CommentShow.swift in Sources */,
+				9055012D2931A66E00BE507F /* LoginPage.swift in Sources */,
+				90AC5E6A2928ABD700A43F18 /* PlayerPage.swift in Sources */,
+				90CF2B472927B96300016C66 /* RecommendedSongs.swift in Sources */,
+				9083C6B9298F5C4C0010B4B3 /* LocalMusic.swift in Sources */,
+				90FAC4A0294408F600ACCED2 /* PlayListShow.swift in Sources */,
+				9055012F2931AB9F00BE507F /* SheetDetailPage.swift in Sources */,
+				905501312931B2ED00BE507F /* UserDisplay.swift in Sources */,
+				90C02A102951D0AE00A91B61 /* QrcodeLogin.swift in Sources */,
+				905CB025292BA4B100996E7E /* SearchResultDisplay.swift in Sources */,
+				90CDCBFF2945827D00730395 /* HighQualityPlaylist.swift in Sources */,
+				9044D16F2945899000B2EFD9 /* PlaylistDiscover.swift in Sources */,
+				90DD555E294DBE75002C3F02 /* SearchPlaylist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,10 +423,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wwyy Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 6274RKW7XD;
+				DEVELOPMENT_TEAM = 3VB3K39UYW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = wwyy;
+				INFOPLIST_FILE = "wwyy-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "腕上云音乐";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -343,7 +442,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -355,10 +454,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wwyy Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 6274RKW7XD;
+				DEVELOPMENT_TEAM = 3VB3K39UYW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = wwyy;
+				INFOPLIST_FILE = "wwyy-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "腕上云音乐";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -374,7 +474,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -384,7 +484,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6274RKW7XD;
+				DEVELOPMENT_TEAM = 3VB3K39UYW;
 				INFOPLIST_KEY_CFBundleDisplayName = wwyy;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy;
@@ -400,7 +500,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6274RKW7XD;
+				DEVELOPMENT_TEAM = 3VB3K39UYW;
 				INFOPLIST_KEY_CFBundleDisplayName = wwyy;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy;

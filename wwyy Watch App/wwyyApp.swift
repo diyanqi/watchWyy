@@ -2,7 +2,7 @@
 //  wwyyApp.swift
 //  wwyy Watch App
 //
-//  Created by 翟彦棋 on 2022/11/18.
+//  Created by diyanqi on 2022/11/18.
 //
 
 import SwiftUI

@@ -1,0 +1,9 @@
+{
+    "user":{
+        "logged":false,
+        "nickname":"none",
+        "cookie":"none"
+    },
+    "defaultQuality":"lossless",
+    "api":"https://wwyy.amzcd.top"
+}
