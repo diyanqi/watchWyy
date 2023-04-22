@@ -20,7 +20,7 @@ var Gsn:[String] = ["🐔你太美"]
 var Gsa:[String] = ["坤坤"]
 var Gsi:[AVPlayerItem] = [AVPlayerItem(url: URL(string: unavaliable)!)]
 var Gplayid:Int = 0
-var Gsongids:[Int64] = [1340439829]
+var Gsongids:[Int64] = [-114514]
 var GupdateTime:[Int64] = [0]
 var change_by_playlist:Bool = false
 var remoteCommandCenter: MPRemoteCommandCenter = MPRemoteCommandCenter.shared()
@@ -46,6 +46,13 @@ struct ContentView: View {
                             Image(systemName: "magnifyingglass")
                                 .foregroundColor(.yellow)
                             Text("搜索")
+                        }
+                    }
+                    NavigationLink(destination: EverydayNew()) {
+                        HStack{
+                            Image(systemName: "heart.circle")
+                                .foregroundColor(Color(red: 219/255, green: 112/255, blue: 147/255))
+                            Text("每日推荐")
                         }
                     }
                     NavigationLink(destination: PlaylistDiscover()) {
@@ -126,7 +133,7 @@ struct ContentView: View {
         print("文件: \(file)")
         let exist = manager.fileExists(atPath: file.path)
         if !exist {
-            let data = Data(base64Encoded:"ewogICAgInVzZXIiOnsKICAgICAgICAibG9nZ2VkIjpmYWxzZSwKICAgICAgICAibmlja25hbWUiOiJub25lIiwKICAgICAgICAiY29va2llIjoibm9uZSIKICAgIH0sCiAgICAiZGVmYXVsdFF1YWxpdHkiOiJsb3NzbGVzcyIsCiAgICAiYXBpIjoiaHR0cHM6Ly93d3l5LmFtemNkLnRvcCIKfQo=" ,options:.ignoreUnknownCharacters)
+            let data = Data(base64Encoded:"ewogICAgInVzZXIiOnsKICAgICAgICAibG9nZ2VkIjpmYWxzZSwKICAgICAgICAibmlja25hbWUiOiJub25lIiwKICAgICAgICAiY29va2llIjoibm9uZSIKICAgIH0sCiAgICAiZGVmYXVsdFF1YWxpdHkiOiJsb3NzbGVzcyIsCiAgICAiYXBpIjoiaHR0cHM6Ly9jbnd3eXkuYW16Y2QudG9wOjIwODMiCn0K" ,options:.ignoreUnknownCharacters)
             let createSuccess = manager.createFile(atPath: file.path,contents:data,attributes:nil)
             print("文件创建结果: \(createSuccess)")
         }

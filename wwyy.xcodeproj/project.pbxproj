@@ -16,8 +16,12 @@
 		905CB025292BA4B100996E7E /* SearchResultDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905CB024292BA4B100996E7E /* SearchResultDisplay.swift */; };
 		9083C6B5298F42920010B4B3 /* SongDetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9083C6B4298F42920010B4B3 /* SongDetailPage.swift */; };
 		9083C6B9298F5C4C0010B4B3 /* LocalMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9083C6B8298F5C4C0010B4B3 /* LocalMusic.swift */; };
+		9093A23329E594B300E605CD /* LrcPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093A23229E594B300E605CD /* LrcPlayer.swift */; };
 		90A3866C2929B3DB00A84FA9 /* PlayAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A3866B2929B3DB00A84FA9 /* PlayAudio.swift */; };
 		90A9786E292B8AF600F9BBB1 /* SearchPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9786D292B8AF600F9BBB1 /* SearchPage.swift */; };
+		90AAA77429E18FD5001F1508 /* EverydayNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AAA77329E18FD5001F1508 /* EverydayNew.swift */; };
+		90AAA77629E190F2001F1508 /* EverydaySonglist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AAA77529E190F2001F1508 /* EverydaySonglist.swift */; };
+		90AAA77829E19118001F1508 /* EverydaySongs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AAA77729E19118001F1508 /* EverydaySongs.swift */; };
 		90AC5E6829288BA900A43F18 /* SheetDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AC5E6729288BA900A43F18 /* SheetDetail.swift */; };
 		90AC5E6A2928ABD700A43F18 /* PlayerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AC5E692928ABD700A43F18 /* PlayerPage.swift */; };
 		90C02A0C2951750900A91B61 /* SettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C02A0B2951750900A91B61 /* SettingPage.swift */; };
@@ -48,6 +52,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		90706C0C29DEDF4A00581CEE /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		90CF2B422927A2F400016C66 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -71,9 +85,13 @@
 		905CB024292BA4B100996E7E /* SearchResultDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultDisplay.swift; sourceTree = "<group>"; };
 		9083C6B4298F42920010B4B3 /* SongDetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailPage.swift; sourceTree = "<group>"; };
 		9083C6B8298F5C4C0010B4B3 /* LocalMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMusic.swift; sourceTree = "<group>"; };
+		9093A23229E594B300E605CD /* LrcPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LrcPlayer.swift; sourceTree = "<group>"; };
 		90A3866B2929B3DB00A84FA9 /* PlayAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayAudio.swift; sourceTree = "<group>"; };
 		90A9786A292A2C5D00F9BBB1 /* wwyy-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "wwyy-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		90A9786D292B8AF600F9BBB1 /* SearchPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPage.swift; sourceTree = "<group>"; };
+		90AAA77329E18FD5001F1508 /* EverydayNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverydayNew.swift; sourceTree = "<group>"; };
+		90AAA77529E190F2001F1508 /* EverydaySonglist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverydaySonglist.swift; sourceTree = "<group>"; };
+		90AAA77729E19118001F1508 /* EverydaySongs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverydaySongs.swift; sourceTree = "<group>"; };
 		90AC5E6729288BA900A43F18 /* SheetDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetDetail.swift; sourceTree = "<group>"; };
 		90AC5E692928ABD700A43F18 /* PlayerPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPage.swift; sourceTree = "<group>"; };
 		90C02A0B2951750900A91B61 /* SettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPage.swift; sourceTree = "<group>"; };
@@ -125,29 +143,33 @@
 		90CF2B332927A2F100016C66 /* wwyy Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				901AB16E298DF1C200120330 /* Data.json */,
 				90CF2B382927A2F400016C66 /* Assets.xcassets */,
 				90C417BD2944B04400225C18 /* CommentShow.swift */,
 				90CF2B362927A2F200016C66 /* ContentView.swift */,
-				9083C6B8298F5C4C0010B4B3 /* LocalMusic.swift */,
-				90C02A0B2951750900A91B61 /* SettingPage.swift */,
+				90AAA77329E18FD5001F1508 /* EverydayNew.swift */,
+				90AAA77529E190F2001F1508 /* EverydaySonglist.swift */,
+				90AAA77729E19118001F1508 /* EverydaySongs.swift */,
+				901AB16E298DF1C200120330 /* Data.json */,
 				90CDCBFE2945827D00730395 /* HighQualityPlaylist.swift */,
+				9083C6B8298F5C4C0010B4B3 /* LocalMusic.swift */,
 				9055012C2931A66E00BE507F /* LoginPage.swift */,
-				90C02A0F2951D0AE00A91B61 /* QrcodeLogin.swift */,
 				90FAC4A129443E6300ACCED2 /* LyricsShow.swift */,
+				9093A23229E594B300E605CD /* LrcPlayer.swift */,
 				90A3866B2929B3DB00A84FA9 /* PlayAudio.swift */,
-				9083C6B4298F42920010B4B3 /* SongDetailPage.swift */,
 				90AC5E692928ABD700A43F18 /* PlayerPage.swift */,
 				9044D16E2945899000B2EFD9 /* PlaylistDiscover.swift */,
 				90FAC49F294408F600ACCED2 /* PlayListShow.swift */,
 				90CF2B3A2927A2F400016C66 /* Preview Content */,
+				90C02A0F2951D0AE00A91B61 /* QrcodeLogin.swift */,
 				90CF2B462927B96300016C66 /* RecommendedSongs.swift */,
-				90A9786D292B8AF600F9BBB1 /* SearchPage.swift */,
-				905CB024292BA4B100996E7E /* SearchResultDisplay.swift */,
 				90DD555B294DBDAC002C3F02 /* Searches.swift */,
+				90A9786D292B8AF600F9BBB1 /* SearchPage.swift */,
 				90DD555D294DBE75002C3F02 /* SearchPlaylist.swift */,
+				905CB024292BA4B100996E7E /* SearchResultDisplay.swift */,
+				90C02A0B2951750900A91B61 /* SettingPage.swift */,
 				90AC5E6729288BA900A43F18 /* SheetDetail.swift */,
 				9055012E2931AB9F00BE507F /* SheetDetailPage.swift */,
+				9083C6B4298F42920010B4B3 /* SongDetailPage.swift */,
 				9044D17029458CF500B2EFD9 /* SongDiscover.swift */,
 				90CDCBFC29457D5E00730395 /* TopPlaylist.swift */,
 				905501302931B2ED00BE507F /* UserDisplay.swift */,
@@ -192,6 +214,7 @@
 				90CF2B2B2927A2F100016C66 /* Sources */,
 				90CF2B2C2927A2F100016C66 /* Frameworks */,
 				90CF2B2D2927A2F100016C66 /* Resources */,
+				90706C0C29DEDF4A00581CEE /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -211,7 +234,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1410;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					90CF2B282927A2F100016C66 = {
@@ -273,14 +296,18 @@
 				90CDCBFD29457D5E00730395 /* TopPlaylist.swift in Sources */,
 				90CF2B372927A2F200016C66 /* ContentView.swift in Sources */,
 				90DD555C294DBDAC002C3F02 /* Searches.swift in Sources */,
+				90AAA77829E19118001F1508 /* EverydaySongs.swift in Sources */,
 				9044D17129458CF500B2EFD9 /* SongDiscover.swift in Sources */,
+				90AAA77429E18FD5001F1508 /* EverydayNew.swift in Sources */,
 				90FAC4A229443E6300ACCED2 /* LyricsShow.swift in Sources */,
 				90A3866C2929B3DB00A84FA9 /* PlayAudio.swift in Sources */,
 				90CF2B352927A2F200016C66 /* wwyyApp.swift in Sources */,
 				90C02A0C2951750900A91B61 /* SettingPage.swift in Sources */,
 				90A9786E292B8AF600F9BBB1 /* SearchPage.swift in Sources */,
 				90C417BE2944B04400225C18 /* CommentShow.swift in Sources */,
+				90AAA77629E190F2001F1508 /* EverydaySonglist.swift in Sources */,
 				9055012D2931A66E00BE507F /* LoginPage.swift in Sources */,
+				9093A23329E594B300E605CD /* LrcPlayer.swift in Sources */,
 				90AC5E6A2928ABD700A43F18 /* PlayerPage.swift in Sources */,
 				90CF2B472927B96300016C66 /* RecommendedSongs.swift in Sources */,
 				9083C6B9298F5C4C0010B4B3 /* LocalMusic.swift in Sources */,
@@ -361,6 +388,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Debug;
 		};
@@ -412,6 +440,7 @@
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Release;
 		};
@@ -423,7 +452,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wwyy Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 3VB3K39UYW;
+				DEVELOPMENT_TEAM = 6274RKW7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "wwyy-Watch-App-Info.plist";
@@ -454,7 +483,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wwyy Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 3VB3K39UYW;
+				DEVELOPMENT_TEAM = 6274RKW7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "wwyy-Watch-App-Info.plist";
@@ -482,13 +511,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3VB3K39UYW;
+				DEVELOPMENT_TEAM = 6274RKW7XD;
 				INFOPLIST_KEY_CFBundleDisplayName = wwyy;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 			};
@@ -498,13 +529,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3VB3K39UYW;
+				DEVELOPMENT_TEAM = 6274RKW7XD;
 				INFOPLIST_KEY_CFBundleDisplayName = wwyy;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;

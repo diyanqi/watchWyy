@@ -1,10 +1,9 @@
 //
-//  RecommendedSongs.swift
+//  EverydaySonglist.swift
 //  wwyy Watch App
 //
-//  Created by diyanqi on 2022/11/18.
+//  Created by diyanqi on 2023/2/8.
 //
-
 
 import SwiftUI
 
@@ -13,12 +12,11 @@ private struct Sheet: Codable,Identifiable{
     var id: Int64
     var name: String
     var picUrl: String
-    var playCount: Int64
 }
 
 private struct OriginSheet: Codable{
 //    var id = UUID()
-    var result: [Sheet]
+    var recommend: [Sheet]
 }
 
 private struct NetWorkImage: View {
@@ -62,15 +60,19 @@ private final class Loader: ObservableObject {
     }
 }
 
-struct RecommendedSongs: View {
-    @State private var sheets: OriginSheet = OriginSheet(result: [Sheet(id: 0, name: "加载中……", picUrl: "0", playCount: 0)])
+
+struct EverydaySonglist: View {
+    @State private var sheets: OriginSheet = OriginSheet(recommend: [Sheet(id: 0, name: "加载中……", picUrl: "0")])
     @State private var loaded:Bool = false
+    @State private var showingAlert = false
+    @State private var showedOnce = false
+    
     var body: some View {
         VStack{
             if(loaded){
                 NavigationView {
                     List {
-                        ForEach(sheets.result) { sheet in
+                        ForEach(sheets.recommend) { sheet in
                             NavigationLink(destination: SheetDetail(sid: sheet.id,sname: sheet.name,picurl: sheet.picUrl)) {
                                 HStack{
                                     NetWorkImage(url:URL(string: sheet.picUrl)!)
@@ -89,21 +91,24 @@ struct RecommendedSongs: View {
             }
         }
         .onAppear(perform: { self.getSheet() })
+        .alert(isPresented: $showingAlert) {
+            Alert(
+                title: Text("出错了"),
+                message: Text("日推歌单/歌曲需登录后方可使用。"),
+                dismissButton: .default(Text("好的"), action: {showingAlert = false; showedOnce = true})
+            )
+        }
     }
     func getSheet() {
         //设置需要获取的网址
-        let urlstr:String = "\(apiServer)/personalized?cookie=\(profile.user.cookie)"
+        let urlstr:String = "\(apiServer)/recommend/resource?cookie=\(profile.user.cookie)"
         let urlcoded = urlstr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let url = URL(string: urlcoded)!
         print(urlcoded)
         //请求网址
         var urlRequest = URLRequest(url:url)
-        //请求获取的类型是application/json（也就是JSON类型）
-//        urlRequest.addValue("application/json",forHTTPHeaderField: "Accept")
-        //检查获取到的数据
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             do {
-                //将数据赋值给jokeDate，并且判断数据不为空的话
                 if let sheetData = data {
                     let str = String(data:sheetData, encoding: String.Encoding.utf8)
                     //设置解码器为JSONDecoder()
@@ -121,14 +126,17 @@ struct RecommendedSongs: View {
                     print("No data")
                 }
             } catch {
-                sheets.result[0].name=(error.localizedDescription.debugDescription)+(error.localizedDescription.description)
+                if(!showedOnce){
+                    showingAlert = true
+                }
+                sheets.recommend[0].name=(error.localizedDescription.debugDescription)+(error.localizedDescription.description)
             }
         }.resume()
     }
 }
 
-struct RecommendedSongs_Previews: PreviewProvider {
+struct EverydaySonglist_Previews: PreviewProvider {
     static var previews: some View {
-        RecommendedSongs()
+        EverydaySonglist()
     }
 }

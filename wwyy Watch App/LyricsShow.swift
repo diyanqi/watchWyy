@@ -94,7 +94,18 @@ private struct OriginSheet: Codable{
 private struct MyLrc: Codable, Hashable{
     var lrc:String
     var pos:String
+    var t:Double
 }
+
+// 定义渐变颜色数组
+let colors: [Color] = [.red, .yellow, .green]
+
+// 定义渐变起始和终止位置
+let startPoint = UnitPoint(x: 0, y: 0)
+let endPoint = UnitPoint(x: 1, y: 0)
+
+// 构建渐变背景
+let gradient = LinearGradient(gradient: Gradient(colors: colors), startPoint: startPoint, endPoint: endPoint)
 
 struct LyricsShow: View {
     private let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
@@ -106,6 +117,8 @@ struct LyricsShow: View {
     @State private var nowpos:String = "none"
     @State private var loaded:Bool = false
     @State private var lastSelected:String = ""
+    @State private var currentID = Gsongids[(Gplayid)]
+    
     var body: some View {
         HStack {
             if(loaded){
@@ -120,52 +133,63 @@ struct LyricsShow: View {
                                 Text(lrc.lrc)
                                     .font(.headline)
                                     .foregroundColor( (lrc.pos == nowpos) ? (.white) : (.gray) )
-                                    .frame(alignment: .center)
+                                    .multilineTextAlignment(.center)
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .id(lrc.pos)
+                                    .onTapGesture {
+                                        let time = lrc.t
+                                        let currentTime = player.currentTime().seconds
+                                        let duration = player.currentItem?.duration.seconds ?? 0
+                                        let targetTime = min(duration, max(0, time))
+                                        player.seek(to: CMTime(seconds: targetTime, preferredTimescale: 1000))
+                                    }
                                 Text("")
                             }
                         }
                         .onReceive(timer) { _ in
-                            let  currentTime =  CMTimeGetSeconds ( player.currentTime())
-                            //一个小算法，来实现00：00这种格式的播放时间
-                            var all:Int = 0
-                            if(currentTime == .infinity || currentTime == .nan){
-                                all = 0
-                            }else{
-                                all = Int (currentTime)
-                            }
-                            let  m: Int = all % 60
-                            let  f: Int = Int (all/60)
-                            time = ""
-                            if  f<10{
-                                time = "0\(f):"
-                            } else  {
-                                time = "\(f)"
-                            }
-                            if  m<10{
-                                time += "0\(m)"
-                            } else  {
-                                time += "\(m)"
-                            }
-                            //更新播放时间
-                            var lastid = "mytop"
-                            for t in pLrc{
-                                if(t.pos.sliceString(0..<5) == time){
-                                    let id = t.pos
-                                    nowpos = id
-                                    if(nowpos == lastSelected){
-                                        break
-                                    }
-                                    lastSelected = nowpos
-                                    withAnimation(Animation.easeInOut){
-                                        proxy.scrollTo(lastid,anchor:.top)
-                                    }
-                                    break
+                            let currentTime = player.currentTime() // 假设 player 是 AVPlayer 对象
+                            let currentTimeValue = currentTime.value
+                            let currentTimeScale = currentTime.timescale
+                            let currentTimeInSeconds = Double(currentTimeValue) / Double(currentTimeScale)
+                            let currentTimeInMilliseconds = currentTimeInSeconds * 1000.0
+                            let formatter = DateComponentsFormatter()
+                            formatter.zeroFormattingBehavior = .pad
+                            formatter.allowedUnits = [.minute, .second, .nanosecond]
+                            formatter.unitsStyle = .positional
+                            let time = formatter.string(from: currentTimeInSeconds)!
+                            
+                            var foundIndex = -1 // 初始化为 -1，若无法找到合适的位置，则不会滚动
+                            
+                            // 二分查找
+                            var leftIndex = 0
+                            var rightIndex = pLrc.count - 1
+                            while leftIndex <= rightIndex {
+                                let midIndex = (leftIndex + rightIndex) / 2
+                                let midTime = pLrc[midIndex].t
+                                if midTime <= currentTimeInSeconds {
+                                    foundIndex = midIndex
+                                    leftIndex = midIndex + 1
+                                } else {
+                                    rightIndex = midIndex - 1
                                 }
-                                lastid = t.pos
                             }
                             
+                            if foundIndex != -1 && foundIndex < pLrc.count {
+                                let id = pLrc[foundIndex].pos
+                                if(nowpos != id){
+                                    nowpos = id
+                                    lastSelected = nowpos
+                                    withAnimation(Animation.easeInOut){
+                                        proxy.scrollTo(nowpos, anchor:.center)
+                                    }
+                                }
+                            }
+                            
+                            if(currentID != Gsongids[(Gplayid)]){
+                                myload2()
+                            }
                         }
+
                     }
                 }
             }else{
@@ -174,9 +198,37 @@ struct LyricsShow: View {
         }.onAppear(perform: { self.myload2() })
             .navigationBarTitle("歌词")
     }
+    
+    func getTimeFromString(str: String) -> Double? {
+        let pattern = "\\[([0-9]+:[0-9]+(\\.[0-9]+)?)\\]"
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        let matches = regex.matches(in: str, options: [], range: NSRange(location: 0, length: str.utf16.count))
+        guard let match = matches.first else { return nil }
+        let timeRange = match.range(at: 1)
+        let timeString = NSString(string: str).substring(with: timeRange)
+        let timeParts = timeString.components(separatedBy: ":")
+        guard timeParts.count == 2, let minutes = Double(timeParts[0]), let seconds = Double(timeParts[1]) else {
+            return nil
+        }
+        if timeParts[1].contains(".") {
+            return minutes * 60 + seconds
+        } else {
+            return minutes * 60 + seconds.rounded()
+        }
+    }
+    
+    func getLyrics(from lyricsLine: String) -> String? {
+        let separator = "]"
+        if let separatorIndex = lyricsLine.firstIndex(of: Character(separator)) {
+            return String(lyricsLine[separatorIndex..<lyricsLine.endIndex].dropFirst())
+        }
+        return nil
+    }
+    
     func myload2(){
         //设置需要获取的网址
         let urlstr:String = "\(apiServer)/lyric?id=\(String(Gsongids[(Gplayid)]))"
+        currentID = Gsongids[(Gplayid)]
         let urlcoded = urlstr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let url = URL(string: urlcoded)!
         print(urlcoded)
@@ -200,11 +252,7 @@ struct LyricsShow: View {
                         let splitedLrc = decodedData.lrc.lyric.split{$0 == "\n"}.map(String.init)
                         pLrc = []
                         for l in splitedLrc{
-                            let range: Range = l.range(of: "]")!
-                            let rp = l.distance(from: l.startIndex, to: range.lowerBound)
-                            let t:String = l.sliceString(1..<rp)
-                            let ly:String = l.substring(from: rp+1)
-                            pLrc.append(MyLrc(lrc: ly, pos: t))
+                            pLrc.append(MyLrc(lrc: getLyrics(from: l)!, pos: String(getTimeFromString(str: l)!), t: getTimeFromString(str: l)!))
                         }
                         loaded = true
                     }

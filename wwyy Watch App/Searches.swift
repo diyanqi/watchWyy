@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Searches: View {
-    @State var tabViewSelected3: Int = 1
+    @State var tabViewSelected3: Int = 0
     @State var content:String = "content"
     var body: some View {
         TabView(selection: $tabViewSelected3){
@@ -18,12 +18,6 @@ struct Searches: View {
             SearchPlaylist(searchword: content)
                 .navigationBarTitle("歌单")
                 .tag(1)
-        }.onAppear(perform: { self.refreshTab() })
-    }
-    func refreshTab(){
-        let time: TimeInterval = 0.05
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time) {
-            tabViewSelected3 = 0
         }
     }
 }

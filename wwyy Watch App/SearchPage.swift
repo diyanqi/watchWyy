@@ -23,48 +23,56 @@ struct SearchPage: View {
     @State private var username: String = ""
     @State var resultPagePresented: Bool = false
     @State var searchWordWhole: String = "出错了，请重试一次"
+    @State var hasSth: Bool = false
     
     var body: some View {
-        VStack{
-            NavigationStack{
-                HStack{
-                    TextField(
-                        "搜些什么……",
-                        text: $username
-                    )
-                    .focused($emailFieldIsFocused)
-                    .textInputAutocapitalization(.never)
-                    .disableAutocorrection(true)
-                    NavigationLink {
-                        Searches(content: username)
-                    } label: {
-                        Image(systemName: "magnifyingglass")
-                    }.frame(maxWidth: 50)
-                }
-                List{
-                    VStack(alignment: .leading){
-                        HStack{
-                            Image(systemName: "flame")
-                            Text("热门搜索")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity,alignment: .leading)
-                        }.padding(.leading)
+        VStack {
+            List {
+                Section() {
+                    HStack {
+                        TextField(
+                            "搜些什么……",
+                            text: $username, onCommit: {
+                                if(username != ""){
+                                    hasSth = true
+                                }
+                            }
+                        )
+                        .focused($emailFieldIsFocused)
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                     }
-                    if(loaded){
-                        ForEach(hots.data,id: \.self){d in
-                            NavigationLink {
-                                Searches(content: (d.searchWord))
-                            } label: {
-                                Text(d.searchWord).font(.caption).frame(maxWidth: .infinity,alignment: .leading).padding(.leading)
+                    if(hasSth){
+                        NavigationLink {
+                            Searches(content: username)
+                        } label: {
+                            HStack{
+                                Image(systemName: "magnifyingglass")
+                                    .frame(maxWidth: 50)
+                                Text("搜索\"\(username)\"")
                             }
                         }
-                    }else{
+                    }
+                }
+                Section(header: Text("热门搜索")) {
+                    if loaded {
+                        ForEach(hots.data, id: \.self) { d in
+                            NavigationLink(destination: Searches(content: (d.searchWord))) {
+                                Text(d.searchWord)
+                                    .font(.caption)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading)
+                            }
+                        }
+                    } else {
                         ProgressView()
                     }
                 }
             }
         }.onAppear(perform: { self.getHot() })
+            .navigationTitle(Text("搜索"))
     }
+    
     func getHot(){
         let myurl = URL(string: "\(apiServer)/search/hot/detail")!
         var urlRequest = URLRequest(url:myurl)

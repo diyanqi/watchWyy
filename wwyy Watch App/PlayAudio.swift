@@ -12,6 +12,50 @@ import AVKit
 import MediaPlayer
 import UIKit
 
+struct RemoteImage: View {
+    let url: URL
+    
+    init(url: URL) {
+        self.url = url
+    }
+    
+    var body: some View {
+        Image(uiImage: UIImage(data: try! Data(contentsOf: url))!) // 加载网络图片
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+            .scaleEffect(1.3)
+            .blur(radius: 3)
+            .foregroundColor(.gray)
+            .opacity(0.3)
+            .onAppear {
+                // 在视图出现时异步加载远程图片
+                DispatchQueue.global().async {
+                    // 根据 URL 加载图片数据
+                    guard let data = try? Data(contentsOf: url) else {
+                        return
+                    }
+
+                    // 将图片数据转换为 UIImage 对象
+                    guard let image = UIImage(data: data) else {
+                        return
+                    }
+
+                    // 在主线程更新 UI
+                    DispatchQueue.main.async {
+                        self.uiImage = image
+                        let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { size -> UIImage in
+                                return image
+                            })
+                        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
+                    }
+                }
+            }
+    }
+    
+    @State private var uiImage: UIImage? = nil
+}
+
 private struct SongDetail: Codable{
     var url:String?
     var id:Int64
@@ -289,7 +333,12 @@ struct PlayAudio: View {
     @State private var showAlert = false
     @State private var detailPagePresented = false
     
-    public init(songItems:[AVPlayerItem], name:[String], ar:[String], isnt:Bool,isll:Bool){
+    @Binding var selectedTabIndex: Int
+    @State var isDownloading:Bool = false
+    @State var imgUrl = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAABTUlEQVR42j2QS0sCURiGzz/J8paSkzbqiFAhhdGii9Ki2iXkDygTy42BbVxq9gcCa+NeV5LmLncKhnjZDKgwMqPObN/mnCEX7+Kc74Xv+R4yn8+xXC6haRqLKIqQZRmSJGGxWKz+CX3QjEYjNJtNVKtVlEofqFQqrDwej42iqqqsVCy+4fryCh5uG077JgSvH5nMMzqdjlFUFAWNxjeikSjcLg7mNdMqHs6NfL6AyWQCQhkLhVcEhQCiZ+fIcVv43A3iwGzGhl6O38bR+mmBUPD7uwR8OzwEfe27y4mkzYK4zYrIySliNzF0u78gs9kMtVoNft7H1l04HEgGBOzxXhyHj5BKPbKjCAUdDAZIP6XhsNpXfBbTOsKHYdS/6sYx1CHl7Pf7yGZfENoPIaKzPiSSKJfLGA6HbE7+hU6nUya71+sxn+22oYWq01QNf1LyGv5cLlNDAAAAAElFTkSuQmCC"
+    
+    public init(songItems:[AVPlayerItem], name:[String], ar:[String], isnt:Bool,isll:Bool, selectedTabIndex: Binding<Int>){
+        self._selectedTabIndex = selectedTabIndex
         isNewTask = isnt
         isl = isll
         if(isNewTask == false){
@@ -342,6 +391,11 @@ struct PlayAudio: View {
         player.play()
         print("shit:::"+String(player.reasonForWaitingToPlay?.rawValue ?? "no shit"))
         print(songItems[0])
+        if let asset = songItems[0].asset as? AVURLAsset {
+            let url = asset.url
+            // 这里的 url 即为 AVPlayerItem 对象的 URL 地址
+            print(url)
+        }
         nowPlayingInfoCenter.playbackState = .playing
         updateNowPlaying()
         
@@ -361,7 +415,7 @@ struct PlayAudio: View {
                     Gplayid = Gsongids.count
                 }
             }else if(order=="random"){
-                Gplayid = Int(arc4random()) % Gsongids.count;
+                Gplayid = Int.random(in: 1...(Gsongids.count-1))
                 Gplayid = Gplayid + 1
             }
             if(!isl){
@@ -387,7 +441,7 @@ struct PlayAudio: View {
                 }
                 task.resume()
             }else{
-                Gsi[Gplayid-1] = AVPlayerItem(url: URL(string: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[Gplayid-1]) + separator + Gsn[Gplayid-1] + separator + Gsa[Gplayid-1])!)
+                Gsi[Gplayid-1] = AVPlayerItem(url: URL(string: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[Gplayid-1]) + ".mp3")!)
                 si[Gplayid-1] = Gsi[Gplayid-1]
                 GupdateTime[Gplayid-1] = Date().timeStamp
                 player.removeAllItems()
@@ -410,7 +464,7 @@ struct PlayAudio: View {
                     Gplayid = -1
                 }
             }else if(order=="random"){
-                Gplayid = Int(arc4random()) % Gsongids.count;
+                Gplayid = Int.random(in: 1...(Gsongids.count-1))
                 Gplayid = Gplayid - 1
             }
             if(!isl){
@@ -436,7 +490,7 @@ struct PlayAudio: View {
                 }
                 task.resume()
             }else{
-                Gsi[Gplayid+1] = AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[Gplayid+1]) + separator + Gsn[Gplayid+1] + separator + Gsa[Gplayid+1]))
+                Gsi[Gplayid+1] = AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[Gplayid+1]) + ".mp3"))
                 si[Gplayid+1] = Gsi[Gplayid+1]
                 GupdateTime[Gplayid+1] = Date().timeStamp
                 player.removeAllItems()
@@ -481,7 +535,7 @@ struct PlayAudio: View {
                     playid = Gsongids.count
                 }
             }else if(order=="random"){
-                playid = Int(arc4random()) % Gsongids.count;
+                playid = Int.random(in: 1...(Gsongids.count-1))
                 playid = playid + 1
             }
             player.pause()
@@ -494,8 +548,8 @@ struct PlayAudio: View {
                     GupdateTime[playid-1] = Date().timeStamp
                 }
             }else{
-                Gsi[playid-1]=(AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[playid-1]) + separator + sn[playid-1] + separator + sa[playid-1])))
-                si[playid-1]=(AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[playid-1]) + separator + sn[playid-1] + separator + sa[playid-1])))
+                Gsi[playid-1]=(AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[playid-1]) + ".mp3")))
+                si[playid-1]=(AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[playid-1]) + ".mp3")))
                 GupdateTime[playid-1] = Date().timeStamp
             }
             player.removeAllItems()
@@ -517,7 +571,7 @@ struct PlayAudio: View {
                 playid = -1
             }
         }else if(order=="random"){
-            playid = Int(arc4random()) % Gsongids.count;
+            playid = Int.random(in: 1...(Gsongids.count-1))
             playid = playid - 1
         }
         do{
@@ -531,8 +585,8 @@ struct PlayAudio: View {
                     GupdateTime[playid+1] = Date().timeStamp
                 }
             }else{
-                Gsi[playid+1]=(AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[playid+1]) + separator + sn[playid+1] + separator + sa[playid+1])))
-                si[playid-1]=(AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[playid+1]) + separator + sn[playid+1] + separator + sa[playid+1])))
+                Gsi[playid+1]=(AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[playid+1]) + ".mp3")))
+                si[playid+1]=(AVPlayerItem(url: URL(fileURLWithPath: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[playid+1]) + ".mp3")))
                 GupdateTime[playid+1] = Date().timeStamp
             }
             playid += 1
@@ -550,24 +604,34 @@ struct PlayAudio: View {
 
     public var body: some View {
         
-        ZStack{
-//            NetWorkImage(url:URL(string: "https://p4.music.126.net/W7Rt5cguIA51XAmQNpWIUg==/109951164924777613.jpg")!)
+        ZStackLayout{
+            
+            RemoteImage(url:URL(string: imgUrl)!)
 //                .frame(maxWidth: .infinity,maxHeight: .infinity)
 //                .scaledToFill()
 //                .scaleEffect(1.3)
 //                .blur(radius: 2)
-//
-//            Color.black.frame(alignment: .center)
-//                .scaleEffect(1.5)
-//                .opacity(0.65)
+//                .foregroundColor(.black)
+//                .opacity(0.3) // 设置不透明度来使图片变暗
             
             VStack(alignment: .leading){
                 // 标题 & 歌手
-                VStack(alignment: .leading){
-                    Text(sn[playid])
-                        .font(.headline)
-                        .frame(alignment: .leading)
-                    Text(sa[playid]).font(.caption).foregroundColor(.gray)
+                
+                VStack{
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        VStack(alignment: .leading){
+                            Text(sn[playid])
+                                .font(.headline)
+                                .frame(alignment: .leading)
+                        }
+                    }
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        VStack(alignment: .leading){
+                            Text(sa[playid])
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                    }
                 }.padding(.horizontal)
                 
                 Spacer()
@@ -675,6 +739,11 @@ struct PlayAudio: View {
                     }
                     .frame(alignment: .center)
                     .onReceive(timer) { _ in
+                        if(imgUrl != songimgUrl){
+                            imgUrl = songimgUrl
+                            print("updated:")
+                            print(imgUrl)
+                        }
                         isPlaying = (player.timeControlStatus == .playing)
                         if(player.timeControlStatus == .playing){
                             nowPlayingInfoCenter.playbackState = .playing
@@ -808,17 +877,24 @@ struct PlayAudio: View {
                                 if(waitingTime < 20){
                                     waitingTime += 1
                                 }else{
-                                    bottomText = "\(playTime)/\(totalTime)"
+                                    if(!isDownloading){
+                                        bottomText = "\(playTime)/\(totalTime)"
+                                    }
                                     waitingTime = 0
                                 }
                             }
                         }
-//                        .onTapGesture {
-//                            downloadMusic(mid:Gsongids[playid],artist: Gsa[playid],name: Gsn[playid])
-//                        }
+                        .onTapGesture {
+                            if(!isl){
+                                downloadMusic(mid:Gsongids[playid],artist: Gsa[playid],name: Gsn[playid])
+                            }
+                        }
                     Spacer()
                     Button(action: {
-                        detailPagePresented = true
+//                        detailPagePresented = true
+                        withAnimation {
+                            self.selectedTabIndex = 1
+                        }
                     }, label: {
                         HStack{
                             Image(systemName: "ellipsis")
@@ -831,7 +907,9 @@ struct PlayAudio: View {
                     }).buttonStyle(BorderlessButtonStyle())
                 }
                 
-            }.navigationBarTitle(tipText)
+            }
+            .navigationBarTitle((tipText))
+            .toolbarBackground(.hidden)
         }
     }
     
@@ -875,58 +953,101 @@ struct PlayAudio: View {
             }
         }.resume()
     }
-}
-
-//struct PlayAudio_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PlayAudio(songItems: [AVPlayerItem(url: URL(string: unavaliable)!)], name:["你干嘛"], ar:["坤坤"], isnt: true)
-//    }
-//}
-
-func downloadMusic(mid:Int64,artist:String,name:String) {
-    check_music_folder()
-    var rurl:String = "\(apiServer)/song/url/v1?id=\(mid)&level=\(profile.defaultQuality)&cookie=\(profile.user.cookie)"
-    let myurl = URL(string: rurl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-    var urlRequest = URLRequest(url:myurl)
-    urlRequest.addValue("application/json",forHTTPHeaderField: "Accept")
-    let task = URLSession.shared.welcomeTask(with: myurl) { welcome, response, error in
-        if let welcome = welcome {
-            let decodedData = welcome
-            var httpurl = decodedData.data?[0].url
-            var murl = httpurl!.replacingOccurrences(of: "http://", with: "https://")
-            let url = URL(string: murl)
-            print("musicURL = "+murl)
-            let request = URLRequest(url: url!)
-            let session = URLSession.shared
-            let downloadTask = session.downloadTask(with: request,
-                   completionHandler: { (location:URL?, response:URLResponse?, error:Error?)
-                    -> Void in
-                    print("location:\(String(describing: location))")
-                    let locationPath = location!.path
-                    var documnets:String = NSHomeDirectory() + "/Documents/wwyyMusic/\(String(mid))\(separator)\(name)\(separator)\(artist)\(murl.extension)"
-//                    documnets = documnets.replacingOccurrences(of: " ", with: "_")
-                    let fileManager = FileManager.default
-                    try! fileManager.moveItem(atPath: locationPath, toPath: documnets)
-                    print("new location:\(documnets)")
-            })
-            downloadTask.resume()
+    
+    func downloadMusic(mid:Int64,artist:String,name:String) {
+        let rurl:String = "\(apiServer)/song/url/v1?id=\(mid)&level=\(profile.defaultQuality)&cookie=\(profile.user.cookie)"
+        let myurl = URL(string: rurl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        var urlRequest = URLRequest(url:myurl)
+        urlRequest.addValue("application/json",forHTTPHeaderField: "Accept")
+        print("开始下载")
+        let task = URLSession.shared.welcomeTask(with: myurl) { welcome, response, error in
+            if let welcome = welcome {
+                let decodedData = welcome
+                let httpurl = decodedData.data?[0].url
+                let murl = httpurl!.replacingOccurrences(of: "http://", with: "https://")
+                let url = URL(string: murl)
+                // 获取Documents目录路径
+                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                let musicPath = "\(documentsPath)/wwyyMusic"
+                let dataPath = "\(musicPath)/Data.json"
+                
+                // 判断wwyyMusic目录是否存在，不存在则创建
+                if !FileManager.default.fileExists(atPath: musicPath) {
+                    do {
+                        try FileManager.default.createDirectory(atPath: musicPath, withIntermediateDirectories: true, attributes: nil)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+                // 判断Data.json是否存在，不存在则创建
+                if !FileManager.default.fileExists(atPath: dataPath) {
+                    let jsonData = try! JSONSerialization.data(withJSONObject: [], options: .prettyPrinted)
+                    FileManager.default.createFile(atPath: dataPath, contents: jsonData, attributes: nil)
+                }
+                
+                // 读取Data.json文件
+                var songList = [[String: String]]()
+                let jsonData = try! Data(contentsOf: URL(fileURLWithPath: dataPath))
+                if let jsonArray = try! JSONSerialization.jsonObject(with: jsonData, options : .allowFragments) as? [NSDictionary] {
+                    for jsonObject in jsonArray {
+                        if let song = jsonObject as? [String: String] {
+                            songList.append(song)
+                        }
+                    }
+                }
+                
+                // 添加歌曲信息到列表末尾
+                songList.append(["songid": String(mid), "singer": artist, "name": name])
+                
+                // 下载歌曲
+                let task = URLSession.shared.downloadTask(with: url!) { (url, response, error) in
+                    guard let url = url else {
+                        print(error?.localizedDescription ?? "Unknown error")
+                        return
+                    }
+                    // 获取下载文件的总大小
+                    let fileData = try! Data(contentsOf: url)
+                    guard let fileSize = response?.expectedContentLength else { return }
+                    let destinationUrl = URL(fileURLWithPath: "\(musicPath)/\(String(mid)).mp3") // 保存到wwyyMusic目录下
+                    isDownloading = true
+                    self.bottomText = "正在下载"
+                    do {
+                        let progressReporter = Progress(totalUnitCount: fileSize)
+                        
+                        // 监测下载进度
+                        progressReporter.observe(\.fractionCompleted, options: [.new]) { (progress, _) in
+                            DispatchQueue.main.async {
+                                let downloadProgress = CGFloat(progress.fractionCompleted)
+                                self.bottomText = "下载：\(Int(downloadProgress*1000)/10)%"
+                                print("下载：\(Int(downloadProgress*1000)/10)%")
+                            }
+                        }
+                        
+                        // 开始下载并保存文件
+                        try FileManager.default.moveItem(at: url, to: destinationUrl)
+                        
+                        // 将歌曲信息写入Data.json文件
+                        let jsonFile = FileHandle(forWritingAtPath: dataPath)
+                        if let data = try? JSONSerialization.data(withJSONObject: songList, options: .prettyPrinted) {
+                            jsonFile?.write(data)
+                        }
+                        print("歌曲下载成功")
+                        isDownloading = false
+                    } catch {
+                        print(error.localizedDescription)
+                        isDownloading = false
+                    }
+                }
+                task.resume()
+            }
         }
-    }
-    task.resume()
-}
-
-func check_music_folder(){
-    let fileManager = FileManager.default
-    let filePath:String = NSHomeDirectory() + "/Documents/wwyyMusic"
-    let exist = fileManager.fileExists(atPath: filePath)
-    if(!exist){
-        let myDirectory:String = NSHomeDirectory() + "/Documents/wwyyMusic"
-        let fileManager = FileManager.default
-        try! fileManager.createDirectory(atPath: myDirectory,
-                                                 withIntermediateDirectories: true, attributes: nil)
+        task.resume()
     }
 }
 
-// /Users/diyanqi/Library/Developer/CoreSimulator/Devices/C3D8D920-7138-4A71-BC55-E9B0ACECF6D2/data/Containers/Data/Application/0D67358C-7935-4DEB-A3F0-20F23870BD5E/Documents/wwyyMusic/1390601339`Flames`11:11.mp3
-
-// /Users/diyanqi/Library/Developer/CoreSimulator/Devices/C3D8D920-7138-4A71-BC55-E9B0ACECF6D2/data/Containers/Data/Application/0D67358C-7935-4DEB-A3F0-20F23870BD5E/Documents/wwyyMusic/1390601339`Flames`11:11.mp3
+struct PlayAudio_Previews: PreviewProvider {
+    static var previews: some View {
+        PlayerPage()
+    }
+}

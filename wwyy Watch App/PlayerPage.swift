@@ -220,6 +220,46 @@ struct Likedsongs:Decodable {
     var ids:[Int64]
 }
 
+private struct NetWorkImage: View {
+    init(url: URL) {
+        self.imageLoader = Loader(url)
+    }
+
+    @ObservedObject private var imageLoader: Loader
+    var image: UIImage? {
+        imageLoader.data.flatMap(UIImage.init)
+    }
+
+    var body: some View {
+        VStack {
+            if image != nil  {
+                Image(uiImage: image!)
+                    .resizable()
+            } else {
+                EmptyView()
+            }
+        }
+    }
+}
+
+private final class Loader: ObservableObject {
+
+    var task: URLSessionDataTask!
+    @Published var data: Data? = nil
+
+    init(_ url: URL) {
+        task = URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
+            DispatchQueue.main.async {
+                self.data = data
+            }
+        })
+        task.resume()
+    }
+    deinit {
+        task.cancel()
+    }
+}
+
 var likedsongs:[Int64] = [114514,1919810]
 
 struct PlayerPage: View {
@@ -234,31 +274,31 @@ struct PlayerPage: View {
     @State private var urls:[OriginForm] = [OriginForm(data: [SongDetail(url: "0", id: 0, size: 0, md5: "0", type: "0", level: "0", time: 0)])]
     @State var musicItems:[AVPlayerItem] = [AVPlayerItem(url: URL(string: "url")!)]
     @State private var mytip:String = "正在加载歌曲"
-    @State var tabViewSelected: Int = 2
+    @State private var tabViewSelected: Int = 2
     @State private var myValue:Double = 0.0
     
     var body: some View {
         VStack(alignment: .leading){
             if(urlGot >= songid.endIndex){
                 ZStack {
-                    Color.clear.edgesIgnoringSafeArea(.all)
                     
                     TabView(selection: $tabViewSelected){
                         ZStack {
                             Color.clear.edgesIgnoringSafeArea(.all)
                             NowPlayingView().navigationBarTitle("").background(Color.clear).edgesIgnoringSafeArea(.top)
+                                .toolbarBackground(.hidden)
                         }.tag(-1)
                         if(newTask){
                             PlayListShow(name: songname, ar: songar).tag(0)
                         }else{
                             PlayListShow(name: Gsn, ar: Gsa).tag(0)
                         }
-                        SongDetailPage(songid: Gsongids[Gplayid]).tag(1)
-                        PlayAudio(songItems: musicItems, name: songname, ar: songar, isnt: newTask, isll: islocal).tag(2)
+                        SongDetailPage(songid: (Gsongids[0])).tag(1)
+                        PlayAudio(songItems: musicItems, name: songname, ar: songar, isnt: newTask, isll: islocal, selectedTabIndex: $tabViewSelected).tag(2)
                         LyricsShow().tag(3)
+//                        LrcPlayer().tag(3)
                         CommentShow().tag(4)
-                    }.edgesIgnoringSafeArea(.top)
-                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    }.background(Color.clear)
                 }
             }else{
                 VStack{
@@ -267,6 +307,11 @@ struct PlayerPage: View {
             }
         }
         .onAppear(perform: {
+            tabViewSelected = 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                tabViewSelected = 2
+            }
+            
             self.getUrl()
             self.get_liked_songs()
         })
@@ -277,14 +322,14 @@ struct PlayerPage: View {
             return
         }
         if(islocal){
+            musicItems = []
+            Gsongids = []
+            GupdateTime = []
             for i in 0...songid.count-1{
                 var lurl = NSHomeDirectory()
                 lurl += "/Documents/wwyyMusic/"
                 lurl += String(songid[i])
-                lurl += separator
-                lurl += songname[i]
-                lurl += separator
-                lurl += songar[i]
+                lurl += ".mp3"
                 musicItems.append(AVPlayerItem(url: URL(fileURLWithPath: lurl)))
                 print("URL:",URL(fileURLWithPath: lurl))
                 let fileManager = FileManager.default

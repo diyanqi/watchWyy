@@ -19,13 +19,39 @@ var uid:Int64 = -1
 
 struct LoginPage: View {
     @State var loaded:Bool = false
+    @State private var showAlert = false
     
     var body: some View {
         if(profile.user.logged){
             if(loaded){
                 UserDisplay(uid: uid,show_logout_button: true)
             }else{
-                ProgressView().onAppear(perform: {self.loadProfile()})
+                VStack{
+                    ProgressView().onAppear(perform: {self.loadProfile()})
+                    Text("如果无法加载，请尝试：")
+                        .font(.caption)
+                    Button(
+                        action: {
+                            self.showAlert = true
+                        },
+                        label: { Text("退出登录") }
+                    ).alert(isPresented: $showAlert){
+                        Alert(
+                            title: Text("退出登录"),
+                            message: Text("您真的要退出登录吗？"),
+                            primaryButton: .default(
+                                Text("取消")
+                            ),
+                            secondaryButton: .destructive(
+                                Text("退出登录"),
+                                action: {
+                                    print("logout button")
+                                    logout()
+                                }
+                            )
+                        )
+                    }
+                }
             }
         }else{
             NavigationStack{
@@ -66,6 +92,19 @@ struct LoginPage: View {
                 }
             }.navigationTitle(Text("登录"))
         }
+    }
+    
+    private func saveSettings(){
+        let jsonString = profile.getString()
+        let pathString = NSHomeDirectory() + "/Documents/wwyyData.json"
+        try! jsonString.write(toFile: pathString, atomically: true, encoding: String.Encoding.utf8)
+    }
+    
+    private func logout() {
+        profile.user.logged = false
+        profile.user.cookie = "none"
+        profile.user.nickname = "none"
+        saveSettings()
     }
     
     func loadProfile(){

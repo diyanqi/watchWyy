@@ -230,10 +230,16 @@ struct PlayListShow: View {
                             }else{
                                 Button(action: {
                                     Task{
-                                        let decodedData = try await PlayListShow.getSongUrl(replayid: cont.id)
-                                        for ob in decodedData.data!{
-                                            Gsi[cont.id]=AVPlayerItem(url: URL(string: ob.url?.replacingOccurrences(of: "http://", with: "https://") ?? unavaliable)!)
-                                            si[cont.id]=AVPlayerItem(url: URL(string: ob.url?.replacingOccurrences(of: "http://", with: "https://") ?? unavaliable)!)
+                                        if(!isl){
+                                            let decodedData = try await PlayListShow.getSongUrl(replayid: cont.id)
+                                            for ob in decodedData.data!{
+                                                Gsi[cont.id]=AVPlayerItem(url: URL(string: ob.url?.replacingOccurrences(of: "http://", with: "https://") ?? unavaliable)!)
+                                                si[cont.id]=AVPlayerItem(url: URL(string: ob.url?.replacingOccurrences(of: "http://", with: "https://") ?? unavaliable)!)
+                                                GupdateTime[cont.id] = Date().timeStamp
+                                            }
+                                        }else{
+                                            Gsi[cont.id]=AVPlayerItem(url: URL(string: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[cont.id]) + ".mp3")!)
+                                            si[cont.id]=AVPlayerItem(url: URL(string: NSHomeDirectory() + "/Documents/wwyyMusic/" + String(Gsongids[cont.id]) + ".mp3")!)
                                             GupdateTime[cont.id] = Date().timeStamp
                                         }
                                         Gplayid = cont.id

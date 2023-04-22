@@ -68,11 +68,14 @@ private struct DetailForm:Codable {
     var songs:[SongForm]
 }
 
+public var songimgUrl = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAABTUlEQVR42j2QS0sCURiGzz/J8paSkzbqiFAhhdGii9Ki2iXkDygTy42BbVxq9gcCa+NeV5LmLncKhnjZDKgwMqPObN/mnCEX7+Kc74Xv+R4yn8+xXC6haRqLKIqQZRmSJGGxWKz+CX3QjEYjNJtNVKtVlEofqFQqrDwej42iqqqsVCy+4fryCh5uG077JgSvH5nMMzqdjlFUFAWNxjeikSjcLg7mNdMqHs6NfL6AyWQCQhkLhVcEhQCiZ+fIcVv43A3iwGzGhl6O38bR+mmBUPD7uwR8OzwEfe27y4mkzYK4zYrIySliNzF0u78gs9kMtVoNft7H1l04HEgGBOzxXhyHj5BKPbKjCAUdDAZIP6XhsNpXfBbTOsKHYdS/6sYx1CHl7Pf7yGZfENoPIaKzPiSSKJfLGA6HbE7+hU6nUya71+sxn+22oYWq01QNf1LyGv5cLlNDAAAAAElFTkSuQmCC"
+
 struct SongDetailPage: View {
     @State private var loaded = false
     @State var songid:Int64 = 347230
     @State private var songd:DetailForm = DetailForm(code: 200, songs: [SongForm(name: "name", id: 114514, ar: [Ar(id: 1919, name: "name")], al: Al(id: 810, name: "name", picUrl: "picUrl"), dt: 25, publishTime: 2333)])
     @Environment(\.dismiss) private var dismiss
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         HStack{
@@ -121,7 +124,10 @@ struct SongDetailPage: View {
                             Text(timeIntervalChangeToTimeStr(timeInterval:Double(songd.songs[0].publishTime/1000)))
                         })
                     }
-                }
+                }.onAppear(perform: {
+                    self.songdet()
+                    songid = Gsongids[Gplayid]
+                })
             }else{
                 ProgressView().onAppear(perform: {
                     self.songdet()
@@ -132,6 +138,12 @@ struct SongDetailPage: View {
         .navigationTitle("歌曲详情")
 //        .navigationBarBackButtonHidden()
         .foregroundColor(.white)
+        .onReceive(timer) { _ in
+            if(songid != Gsongids[Gplayid]){
+                songid = Gsongids[Gplayid]
+                songdet()
+            }
+        }
     }
     
     func songdet() {
@@ -145,6 +157,7 @@ struct SongDetailPage: View {
                     let decodedData = try decoder.decode(DetailForm.self, from: sheetData)
                     DispatchQueue.main.async {
                         songd = decodedData
+                        songimgUrl = songd.songs[0].al.picUrl.replacingOccurrences(of: "http://", with: "https://")
                         loaded = true
                     }
                 } else {
