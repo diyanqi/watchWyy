@@ -52,6 +52,14 @@ struct SettingPage: View {
     ]
     @State private var apiAddress = profile.api
     @FocusState private var apiFieldIsFocused
+    @State private var selectedRoute = 0
+    @State private var showCustomInput = false
+    @State private var customInput = ""
+
+    private let routes:[Selection] = [
+        Selection(value: "https://cnwwyy.amzcd.top:2083", text: "线路一（高速）", icon: "1.lane"),
+        Selection(value: "https://wwyy.amzcd.top", text: "线路二（稳定）", icon: "2.lane")
+    ]
     
     var body: some View {
         HStack{
@@ -68,26 +76,23 @@ struct SettingPage: View {
                             profile.defaultQuality = qualities[selectedQuality].value
                             saveSettings()
                         })
-                        VStack(alignment: .leading){
-                            Text("接口服务器")
+                        Picker("服务器线路", selection: $selectedRoute) {
+                            ForEach(0 ..< routes.count) {
+                                Label(routes[$0].text, systemImage: routes[$0].icon)
+                            }
+                        }.onChange(of: selectedRoute, perform: {value in
+                            profile.api = routes[selectedRoute].value
+                            saveSettings()
+                        })
+                        VStack{
+                            Text("关于本软件")
+                                .font(.headline)
+                            Text("        “腕上广陵乐”是一款能在 Apple Watch 上独立收听音乐歌曲的软件。本软件旨在帮助用户管理自己的歌曲、收听网络歌曲。")
                                 .font(.caption)
-                            Text("( 地址末尾无 / )")
+                            Text("        本软件音乐接口来自 Amzcd Network 网络服务，不关联任何第三方音乐服务。")
                                 .font(.caption)
-                            TextField(
-                                "https://wwyy.amzcd.top",
-                                text: $apiAddress,
-                                onCommit: {
-                                    profile.api = apiAddress
-                                    saveSettings()
-                                }
-                            )
-                            .focused($apiFieldIsFocused)
-                            .textInputAutocapitalization(.never)
-                            .disableAutocorrection(true)
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                            .padding(.top,-15)
-                            .padding(.bottom,-10)
+                            Text("        如果本软件的网络资源侵犯了您的权益，请及时告知管理员和开发者进行处理。禁止用户随意下载，复制版权内容，否则后果自负。")
+                                .font(.caption)
                         }
                     }
                 }
@@ -122,6 +127,14 @@ struct SettingPage: View {
                             cnt += 1
                         }
                         apiAddress = profile.api
+                        cnt = 0
+                        for i in routes{
+                            if(i.value == profile.api){
+                                selectedRoute = cnt
+                                break
+                            }
+                            cnt += 1
+                        }
                         self.loaded = true
                     }
                 } else {

@@ -85,6 +85,8 @@
 		905CB024292BA4B100996E7E /* SearchResultDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultDisplay.swift; sourceTree = "<group>"; };
 		9083C6B4298F42920010B4B3 /* SongDetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailPage.swift; sourceTree = "<group>"; };
 		9083C6B8298F5C4C0010B4B3 /* LocalMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMusic.swift; sourceTree = "<group>"; };
+		908F731D2A02051700FD067B /* wwyy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "wwyy-Bridging-Header.h"; sourceTree = "<group>"; };
+		908F731E2A02051700FD067B /* Phone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phone.swift; sourceTree = "<group>"; };
 		9093A23229E594B300E605CD /* LrcPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LrcPlayer.swift; sourceTree = "<group>"; };
 		90A3866B2929B3DB00A84FA9 /* PlayAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayAudio.swift; sourceTree = "<group>"; };
 		90A9786A292A2C5D00F9BBB1 /* wwyy-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "wwyy-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -126,8 +128,10 @@
 		90CF2B222927A2F100016C66 = {
 			isa = PBXGroup;
 			children = (
+				908F731E2A02051700FD067B /* Phone.swift */,
 				90CF2B332927A2F100016C66 /* wwyy Watch App */,
 				90CF2B2A2927A2F100016C66 /* Products */,
+				908F731D2A02051700FD067B /* wwyy-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -239,6 +243,7 @@
 				TargetAttributes = {
 					90CF2B282927A2F100016C66 = {
 						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1420;
 					};
 					90CF2B2E2927A2F100016C66 = {
 						CreatedOnToolsVersion = 14.1;
@@ -452,7 +457,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wwyy Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 6274RKW7XD;
+				DEVELOPMENT_TEAM = 3VB3K39UYW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "wwyy-Watch-App-Info.plist";
@@ -464,7 +469,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy.watchkit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -480,10 +485,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wwyy Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 6274RKW7XD;
+				DEVELOPMENT_TEAM = 3VB3K39UYW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "wwyy-Watch-App-Info.plist";
@@ -495,8 +501,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy.watchkit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -511,16 +518,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6274RKW7XD;
+				DEVELOPMENT_TEAM = 3VB3K39UYW;
 				INFOPLIST_KEY_CFBundleDisplayName = wwyy;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy;
+				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "wwyy-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -529,16 +544,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6274RKW7XD;
+				DEVELOPMENT_TEAM = 3VB3K39UYW;
 				INFOPLIST_KEY_CFBundleDisplayName = wwyy;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy;
+				PRODUCT_BUNDLE_IDENTIFIER = top.amzcd.wwyy.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "wwyy-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};

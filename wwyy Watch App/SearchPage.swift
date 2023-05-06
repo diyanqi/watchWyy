@@ -49,7 +49,7 @@ struct SearchPage: View {
                             HStack{
                                 Image(systemName: "magnifyingglass")
                                     .frame(maxWidth: 50)
-                                Text("搜索\"\(username)\"")
+                                Text("搜索")
                             }
                         }
                     }

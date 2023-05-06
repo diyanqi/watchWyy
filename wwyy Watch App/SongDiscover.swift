@@ -360,26 +360,27 @@ struct SongDiscover: View {
     @State private var loaded:Bool = false
     var body: some View {
         if(loaded){
-            NavigationView {
-                List {
-                    ForEach(sheets.list) { pl in
+            HStack{
+                NavigationView {
+                    List(sheets.list) { pl in
                         NavigationLink(destination: SheetDetail(sid: pl.id,sname: pl.name,picurl: pl.coverImgUrl.replacingOccurrences(of: "http://", with: "https://"))) {
                             HStack{
                                 NetWorkImage(url:URL(string: pl.coverImgUrl.replacingOccurrences(of: "http://", with: "https://"))!)
+                                    .blur(radius: 2.5)
                                     .frame(maxWidth: 30,maxHeight: 30)
                                     .cornerRadius(5.0)
                                     .padding(.horizontal)
                                     .scaledToFit()
                                 VStack{
-                                    Text(pl.name)
+                                    Text(((pl.name.replacingOccurrences(of: "云音乐", with: "")).replacingOccurrences(of: "黑胶", with: "")))
                                     Text(pl.updateFrequency)
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                 }
                             }
                         }
-                    }
-                }.navigationBarTitle("云音乐排行榜")
+                    }.navigationBarTitle("音乐排行榜")
+                }
             }
         }else{
             ProgressView().onAppear(perform: { self.getSheet() })

@@ -86,23 +86,28 @@ struct QrcodeLogin: View {
     var body: some View {
         VStack{
             if(loaded){
-                NetWorkImage(url:URL(string: qrurl)!)
-                    .scaledToFit()
-                Button(
-                    action: {
-                        message = "正在查询登录状态，请稍后……"
-                        code = -1
-                        check_login()
-                        self.showAlert = true
-                    },
-                    label: { Text("登陆后请点击") }
-                ).alert(isPresented: $showAlert){
-                    Alert(title: Text("提示"), message: Text("状态码：\(code)\n\(message)"), dismissButton: .default(Text("好")))
+                VStack{
+                    NetWorkImage(url:URL(string: qrurl)!)
+                        .scaledToFit()
+                    Text("请使用浏览器或客户端扫码")
+                        .font(.caption2)
+                    Button(
+                        action: {
+                            message = "正在查询登录状态，请稍后……"
+                            code = -1
+                            check_login()
+                            self.showAlert = true
+                        },
+                        label: { Text("登陆后请点击") }
+                    ).alert(isPresented: $showAlert){
+                        Alert(title: Text("提示"), message: Text("状态码：\(code)\n\(message)"), dismissButton: .default(Text("好")))
+                    }
                 }
             }else{
                 ProgressView().onAppear(perform: {self.loadQrcode()})
             }
-        }.navigationBarTitle(tipText)
+        }.toolbarBackground(.hidden)
+//            .navigationTitle(tipText)
     }
     
     private func saveSettings(){
@@ -192,7 +197,7 @@ struct QrcodeLogin: View {
                                     DispatchQueue.main.async {
                                         qrurl = decodedData.data.qrimg
                                         loaded = true
-                                        tipText = "扫码登录"
+                                        tipText = "请使用默认浏览器或客户端扫码"
                                     }
                                 } else {
                                     print("No data")

@@ -38,60 +38,60 @@ struct ContentView: View {
                         HStack{
                             Image(systemName: "play.circle")
                                 .foregroundColor(.orange)
-                            Text("播放中")
+                            Text("今在播放")
                         }
                     }
                     NavigationLink(destination: SearchPage()) {
                         HStack{
                             Image(systemName: "magnifyingglass")
                                 .foregroundColor(.yellow)
-                            Text("搜索")
+                            Text("寻索新乐")
                         }
                     }
                     NavigationLink(destination: EverydayNew()) {
                         HStack{
                             Image(systemName: "heart.circle")
                                 .foregroundColor(Color(red: 219/255, green: 112/255, blue: 147/255))
-                            Text("每日推荐")
+                            Text("日日一新")
                         }
                     }
                     NavigationLink(destination: PlaylistDiscover()) {
                         HStack{
                             Image(systemName: "list.clipboard")
                                 .foregroundColor(.green)
-                            Text("歌单广场")
+                            Text("乐府集成")
                         }
                     }
                     NavigationLink(destination: SongDiscover()) {
                         HStack{
                             Image(systemName: "flame.circle")
                                 .foregroundColor(.cyan)
-                            Text("音乐排行榜")
+                            Text("乐榜题名")
                         }
                     }
                     NavigationLink(destination: LocalMusic()) {
                         HStack{
                             Image(systemName: "arrow.down.app")
                                 .foregroundColor(.blue)
-                            Text("本地音乐")
+                            Text("本地雅集")
                         }
                     }
                     NavigationLink(destination: LoginPage()) {
                         HStack{
                             Image(systemName: "person.circle")
                                 .foregroundColor(.purple)
-                            Text("用户")
+                            Text("个人简策")
                         }
                     }
                     NavigationLink(destination: SettingPage()) {
                         HStack{
                             Image(systemName: "gearshape.circle")
                                 .foregroundColor(.gray)
-                            Text("设置")
+                            Text("偏好设定")
                         }
                     }
                 }
-                .navigationTitle(Text("腕上云音乐"))
+                .navigationTitle(Text("腕上广陵乐"))
                 .onAppear(perform: { self.loadSettings() })
             }
         }

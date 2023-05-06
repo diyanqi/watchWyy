@@ -1,9 +1,9 @@
 <p align="center"><img 
 src="https://s2.loli.net/2023/04/01/aYJR7qbrUtdeLOK.png"/></p>
 
-# watchWyy - 腕上云音乐
-*腕上云音乐* 是一个能在 Apple Watch 
-上独立收听网易云音乐歌曲的软件。无需依赖手机。
+# watchWyy - 腕上广陵乐
+*腕上广陵乐* 是一个能在 Apple Watch 
+上独立收听独家音乐歌曲的软件。无需依赖手机。
 
 # 功能简述
 - [x] 播放来自网易云音乐的歌曲
@@ -40,7 +40,7 @@ src="https://s2.loli.net/2023/04/01/aYJR7qbrUtdeLOK.png"/></p>
 13.04.44.png](https://s2.loli.net/2023/04/01/Uzd6XYQhtgPopvl.png)
 
 # 开发计划
-目前没有上架 AppStore 。有意合作者可私聊。版本或许会有更新。
+正在计划上架 AppStore 。
 
 # 安装指南
 暂时可参见[这里](https://github.com/kuglee/TermiWatch#configuring-the-project)。

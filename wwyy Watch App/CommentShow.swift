@@ -34,7 +34,7 @@ struct CommentShow: View {
                     List{
                         ForEach(commentdata, id:\.self) { cmt in
                             VStack{
-                                Text(cmt.content)
+                                Text(String(String(cmt.content).replacingOccurrences(of: "网易云", with: "")))
                                 Text("\(cmt.user.nickname)")
                                     .font(.caption)
                                     .foregroundColor(.gray)
@@ -54,7 +54,6 @@ struct CommentShow: View {
     func myload3(){
         //设置需要获取的网址
         let urlstr:String = "\(apiServer)/comment/music?id=\(Gsongids[Gplayid])&limit=100"
-//        let urlstr:String = "https://www.oiso.cf/fake"
         let urlcoded = urlstr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let url = URL(string: urlcoded)!
         print(urlcoded)

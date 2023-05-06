@@ -14,47 +14,60 @@ import UIKit
 
 struct RemoteImage: View {
     let url: URL
-    
+    @State private var imageData: Data? = nil
+    @State private var uiImage: UIImage? = nil
+
     init(url: URL) {
         self.url = url
     }
-    
+
     var body: some View {
-        Image(uiImage: UIImage(data: try! Data(contentsOf: url))!) // 加载网络图片
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
-            .scaleEffect(1.3)
-            .blur(radius: 3)
-            .foregroundColor(.gray)
-            .opacity(0.3)
-            .onAppear {
-                // 在视图出现时异步加载远程图片
-                DispatchQueue.global().async {
-                    // 根据 URL 加载图片数据
-                    guard let data = try? Data(contentsOf: url) else {
-                        return
-                    }
-
-                    // 将图片数据转换为 UIImage 对象
-                    guard let image = UIImage(data: data) else {
-                        return
-                    }
-
-                    // 在主线程更新 UI
-                    DispatchQueue.main.async {
-                        self.uiImage = image
-                        let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { size -> UIImage in
-                                return image
-                            })
-                        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
-                    }
+        if let uiImage = uiImage {
+            Image(uiImage: uiImage)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                .scaleEffect(1.3)
+                .blur(radius: 3)
+                .foregroundColor(.gray)
+                .opacity(0.3)
+                .onAppear {
+                    let artwork = MPMediaItemArtwork(boundsSize: uiImage.size, requestHandler: { size -> UIImage in
+                        return uiImage
+                    })
+                    MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
                 }
-            }
+        } else {
+            ProgressView()
+                .onAppear {
+                    loadImage()
+                }
+        }
     }
-    
-    @State private var uiImage: UIImage? = nil
+
+    func loadImage() {
+        DispatchQueue.global().async {
+            guard let data = try? Data(contentsOf: url) else {
+                return
+            }
+
+            guard let image = UIImage(data: data) else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.uiImage = image
+                let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { size -> UIImage in
+                    return image
+                })
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
+            }
+        }
+    }
+
 }
+
+
 
 private struct SongDetail: Codable{
     var url:String?
@@ -1011,7 +1024,7 @@ struct PlayAudio: View {
                     guard let fileSize = response?.expectedContentLength else { return }
                     let destinationUrl = URL(fileURLWithPath: "\(musicPath)/\(String(mid)).mp3") // 保存到wwyyMusic目录下
                     isDownloading = true
-                    self.bottomText = "正在下载"
+                    self.bottomText = "下载成功"
                     do {
                         let progressReporter = Progress(totalUnitCount: fileSize)
                         
